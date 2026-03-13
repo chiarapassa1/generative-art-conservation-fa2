@@ -1,16 +1,16 @@
-# Generative Conservation FA2
+Generative Conservation FA2
 
 SmartPy FA2 contract for generative artworks on Tezos with on-chain
 conservation records and generative behaviour parameters.
 
-Author: Chiara Passa  
+Author: Chiara Passa
 December 2025
 
-## Example artwork
+Example artwork
 
-[![Example artwork](assets/OODebris0.jpg)](https://www.youtube.com/shorts/nrU4b1iR_uM)
+![Example artwork](assets/OODebris0.jpg)
 
-## Interaction demo
+Interaction demo
 
 https://www.youtube.com/shorts/nrU4b1iR_uM
 
