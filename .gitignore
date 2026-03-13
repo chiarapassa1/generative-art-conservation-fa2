@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# SmartPy build / compilation outputs
+build/
+compiled/
+output/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.idea/
+.vscode/
+
+# Python environments
+.env
+.venv
+venv/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
