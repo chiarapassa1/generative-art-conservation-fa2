@@ -1,83 +1,122 @@
-# Architecture
+Architecture
+Overview
 
-## Overview
+The contract combines a standard FA2 NFT implementation with preservation-oriented metadata designed for generative artworks.
 
-The contract combines an NFT ownership layer with conservation-oriented records and generative behaviour parameters.
+Rather than recording only ownership, it stores information that supports the long-term preservation of software-based artworks, including artist intent, renderer provenance, generative identity and decentralized storage references.
 
-It extends a standard FA2 NFT model with structures designed to document both the **technical life of the artwork** and the **behavioural parameters that define each generative edition**.
+Each token represents a generative artwork whose behaviour is defined by deterministic parameters stored on-chain. The contract also maintains structured conservation metadata that can support future migration and preservation activities.
 
-Each token represents a generative artwork whose behaviour is defined by deterministic parameters stored on-chain. The contract also records conservation events and canonical implementations as the artwork evolves over time.
+Main storage areas
 
-## Main storage areas
+Core FA2 storage:
 
-- `administrator`: contract administrator / artist
-- `last_id`: token counter
-- `ledger`: token ownership mapping
-- `token_metadata`: token-level metadata
-- `token_params`: generative behaviour parameters per token
-- `conservators`: authorized conservation addresses
-- `restoration_log`: list of restoration-report CIDs per token
-- `artifact_versions`: list of canonical implementations per token
-- artist intent fields at contract level
+administrator
+last_id
+ledger
+token_metadata
 
-## Generative layer
+Generative layer:
 
-Each token stores deterministic parameters generated at mint time.
+token_params
 
-These parameters include:
+Artist intent:
 
-- `seed`
-- `mode`
-- `personalityA`
-- `personalityB`
-- `personalityC`
+acceptable_reinterpretation
+requires_interactivity
+intent_cid
+allowed_migrations
+forbidden_actions
+authenticity_rule
+intent_history
 
-These values define how the generative sculpture behaves when rendered by the artwork viewer.
+Renderer provenance:
 
-Because these parameters are stored on-chain, the behaviour of each edition can always be reconstructed, even if the rendering engine or software environment changes.
+renderer_original_hash
+renderer_history
+renderer_version_count
+renderer_canonical_version
 
-## Preservation model
+Preservation metadata:
 
-This repository treats the artwork as more than a static token.
+parameter_identity_flags
+edition_behaviours
+storage_backups
+Generative identity
 
-Each token points to a software-based artwork whose implementation may evolve over time. Technologies, browsers, and rendering engines change, and the artwork may require technical migration to remain accessible.
+Each token stores a deterministic set of parameters generated during minting:
 
-The contract does not replace archival practice. Instead, it creates an **on-chain index of preservation decisions, behaviour parameters, and canonical states**.
+seed
+mode
+personalityA
+personalityB
+personalityC
 
-## Roles
+These values define the generative identity of the artwork independently of any specific rendering technology.
 
-### Artist / administrator
+The contract additionally distinguishes between identity-defining parameters and rendering parameters through parameter_identity_flags, allowing future conservation strategies to preserve conceptual identity while accommodating technological evolution.
+
+Artist intent
+
+Artist intent is stored at the contract level.
+
+Preservation preferences can be updated by the administrator, with every modification permanently recorded in the append-only intent_history.
+
+This creates a transparent record of how conservation policies evolve throughout the lifetime of the artwork.
+
+Renderer provenance
+
+The contract maintains independent provenance records for each token renderer.
+
+For every artwork it stores:
+
+the immutable original renderer hash;
+an append-only history of registered renderer versions;
+the currently designated canonical renderer.
+
+This architecture documents software evolution without overwriting previous implementations.
+
+Edition documentation
+
+Each generative mode (0–9) can be associated with descriptive documentation through edition_behaviours.
+
+This enables every edition of the artwork to include preservation-oriented contextual information while remaining independent of the rendering software itself.
+
+Decentralized preservation resources
+
+External preservation resources may be referenced using decentralized storage.
+
+The contract stores backup URIs through storage_backups, allowing multiple preservation locations for documents such as artist intent statements and related conservation resources.
+
+Roles
+Administrator (Artist)
 
 The administrator can:
 
-- mint tokens
-- authorize conservators
-- register canonical artifact versions
-- update artist intent fields
+mint new artworks;
+update artist intent;
+register renderer provenance;
+select canonical renderers;
+configure edition behaviours;
+classify identity-defining parameters;
+register decentralized storage backups.
+Collector
 
-### Owner / collector
+Collectors own and transfer FA2 tokens using the standard NFT functionality.
 
-The owner can hold and transfer the token.
+The contract separates ownership from preservation metadata, allowing conservation information to evolve independently from token transfers.
 
-In the current prototype, the owner can also participate in restoration logging.
+Preservation workflow
+Mint a token.
+Store deterministic generative parameters.
+Register the original renderer.
+Register additional renderer versions when required.
+Select the canonical renderer.
+Update artist intent when conservation policies evolve.
+Register edition documentation.
+Maintain decentralized backup references for preservation resources.
+Design philosophy
 
-### Conservator
+The contract does not attempt to perform conservation automatically.
 
-A trusted address that can append restoration evidence to the conservation record.
-
-## Conservation sequence
-
-1. Mint token
-2. Generative parameters are stored on-chain
-3. Transfer token to owner
-4. Authorize conservator
-5. Create an off-chain conservation report
-6. Upload the report to IPFS
-7. Record the CID in `restoration_log`
-8. Register the updated canonical implementation in `artifact_versions`
-
-## Why keep some data off-chain
-
-Detailed technical conservation records can be large and may evolve over time.
-
-The contract therefore stores **compact references (CIDs)** while the full documentation can live on IPFS or institutional archival systems.
+Instead, it provides a structured on-chain framework for documenting the technical and conceptual evolution of generative artworks while remaining compatible with standard FA2 token ownership.
