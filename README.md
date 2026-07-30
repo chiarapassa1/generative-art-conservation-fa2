@@ -5,19 +5,16 @@ SmartPy implementation of the Tezos FA2 standard for the long-term preservation 
 **Author:** Chiara Passa  
 **December 2025**
 
----
 
 ## Example artwork
 
 ![Example artwork](assets/OODebris0.jpg)
 
----
 
 ## Interaction demo
 
 https://www.youtube.com/shorts/nrU4b1iR_uM
 
----
 
 # Overview
 
@@ -34,7 +31,6 @@ The contract combines standard FA2 ownership with:
 
 The goal is to support the long-term authenticity, migration, documentation, and reconstruction of generative artworks while remaining compatible with the FA2 ecosystem.
 
----
 
 # Why this project exists
 
@@ -46,7 +42,6 @@ Traditional NFT contracts generally record ownership and metadata.
 
 This project explores how blockchain infrastructure can additionally support digital preservation by documenting the technical and conceptual evolution of an artwork throughout its lifetime.
 
----
 
 # Core concepts
 
@@ -60,7 +55,6 @@ These parameters define the identity and behaviour of the artwork and are availa
 
 The contract also distinguishes which parameters define the artwork's identity and which may be adapted during future preservation activities.
 
----
 
 ## Artist intent
 
@@ -77,8 +71,6 @@ This includes:
 
 Every modification is preserved through an append-only intent history.
 
----
-
 ## Renderer provenance
 
 Software inevitably changes.
@@ -93,8 +85,6 @@ It records:
 
 This allows future conservators and institutions to reconstruct the software history of each edition.
 
----
-
 ## Preservation metadata
 
 Large preservation resources remain off-chain.
@@ -108,7 +98,6 @@ The contract stores compact references to resources such as:
 
 The blockchain therefore acts as a verifiable preservation index rather than an archival storage system.
 
----
 
 # Main features
 
@@ -126,7 +115,6 @@ The current contract includes:
 - edition behaviour documentation
 - decentralized preservation references
 
----
 
 # Typical preservation workflow
 
@@ -141,7 +129,6 @@ A typical lifecycle is:
 7. Update preservation metadata whenever required.
 8. Preserve the complete provenance history on-chain.
 
----
 
 # Documentation
 
@@ -158,8 +145,6 @@ Provides a practical guide to the contract entrypoints and the recommended prese
 ### `artist-intent.md`
 
 Explains artist intent fields, authenticity rules, identity-defining parameters, and preservation policies.
-
----
 
 # Repository structure
 
@@ -199,8 +184,6 @@ Then:
 5. Compile to Michelson.
 6. Deploy to Ghostnet before deploying to Tezos Mainnet.
 
----
-
 # Suggested use cases
 
 This framework can support:
@@ -213,7 +196,6 @@ This framework can support:
 - artist intent preservation
 - decentralized archival references
 
----
 
 # Conceptual framing
 
@@ -223,15 +205,12 @@ Ownership follows the standard FA2 model, while preservation-related information
 
 The result is a preservation-oriented framework built on top of the Tezos FA2 standard.
 
----
-
 # Important note
 
 This repository is an artistic and research-oriented prototype intended to explore blockchain-assisted preservation of generative and software-based art.
 
 Before production deployment, the contract should be carefully reviewed and independently audited.
 
----
 
 # License
 
