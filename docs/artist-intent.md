@@ -1,65 +1,66 @@
-# Artist Intent
+Artist Intent
 
-Artist intent is often critical in the conservation of generative and software-based art.
+Artist intent plays a central role in the long-term preservation of generative and software-based artworks.
 
-This contract includes several **contract-level fields** that help guide future migration and restoration decisions.
+This contract stores a set of contract-level preservation fields that document the artist's conservation preferences in a structured, machine-readable form.
 
-These fields provide a minimal, machine-readable statement of the artist’s conceptual boundaries for the work.
+These values define conceptual boundaries that can guide future preservation, migration and reinterpretation decisions.
 
-## Included fields
+Included fields
 
-- `acceptable_reinterpretation`
-- `requires_interactivity`
-- `intent_cid`
-- `allowed_migrations`
-- `forbidden_actions`
+The contract currently stores:
 
-These fields are stored at the **contract level**, meaning they apply to the artwork collection as a whole rather than individual tokens.
+acceptable_reinterpretation
+requires_interactivity
+intent_cid
+allowed_migrations
+forbidden_actions
+authenticity_rule
 
-## Why this matters
+These fields apply to the artwork collection as a whole rather than to individual tokens.
 
-When software becomes obsolete, conservators often need to decide whether a work can be:
+Every modification is permanently recorded through an append-only intent_history, allowing future conservators to reconstruct how the artist's preservation intentions evolved over time.
 
-- reimplemented
-- emulated
-- migrated to new technologies
-- partially substituted
+Why this matters
 
-These fields help document the artist’s preferences in a structured form that can guide future preservation decisions.
+As software platforms evolve, artworks may require migration, emulation or adaptation to remain accessible.
 
-They are **guidelines rather than strict enforcement rules**, but they provide valuable context for conservators and institutions.
+The artist intent fields provide structured guidance regarding:
 
-## Behavioural parameters
+acceptable reinterpretation
+preservation of interactivity
+permitted migration strategies
+actions considered incompatible with the work
+authenticity verification
 
-Each token also stores a set of deterministic parameters that define the behaviour of the generative sculpture.
+Rather than enforcing conservation decisions automatically, these records provide transparent documentation that can support future conservation practice.
 
-These parameters include:
+Behavioural parameters
 
-- `seed`
-- `mode`
-- `personalityA`
-- `personalityB`
-- `personalityC`
+Each token stores a deterministic set of parameters describing its generative identity:
 
-They are generated at mint time and stored on-chain.
+seed
+mode
+personalityA
+personalityB
+personalityC
 
-The artwork viewer uses these parameters to determine structural variations, motion, and interaction behaviour of the digital sculpture.
+These parameters are generated during minting and stored permanently on-chain.
 
-Future implementations of the artwork should preserve the **conceptual role of these parameters**, even if the underlying rendering technology changes.
+The contract also distinguishes between identity-defining parameters and rendering parameters through parameter_identity_flags.
 
-For example, if the artwork is migrated from WebGL to WebGPU or another graphics environment, the behavioural logic driven by these parameters should remain consistent so that each edition retains its identity.
+Identity-defining parameters should remain unchanged to preserve the identity of the artwork, while rendering parameters may be adapted when future preservation strategies require technological migration.
 
-## Example questions this can help answer
+Authenticity
 
-- Is a renderer rewrite acceptable?
-- Can the work be ported from WebGL to WebGPU?
-- Is reduced interactivity forbidden?
-- Can browser dependencies be updated?
-- Should behavioural parameters remain stable across migrations?
-- Is color correction acceptable?
+The contract currently defines the authenticity rule:
 
-## Recommended practice
+seed_must_match
 
-Keep a fuller artist intent statement off-chain as a text or PDF document.
+This rule expresses that the deterministic generative seed is considered an essential component of the artwork's identity.
 
-Upload that document to IPFS and store its CID in the `intent_cid` field so that future conservators can access the complete statement.
+Recommended practice
+
+The on-chain fields provide a concise preservation record rather than a complete conservation policy.
+
+A more detailed artist intent statement should be maintained as an external document (for example PDF or Markdown), stored using decentralized storage such as IPFS, with its CID referenced by the intent_cid field.
