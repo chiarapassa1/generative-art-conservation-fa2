@@ -1,0 +1,167 @@
+{
+  "title": "Artist Intent Statement",
+  "artist": "Chiara Passa",
+  "artwork": "OODebris",
+  "document_type": "preservation_and_reinterpretation_statement",
+  "version": "1.0",
+  "date": "2026-07-30",
+  "language": "en",
+  "scope": "This statement applies to the artwork collection as a whole and is intended to guide future conservation, migration, emulation, reimplementation, and curatorial decisions.",
+  "acceptable_reinterpretation": true,
+  "requires_interactivity": true,
+  "intent_summary": "The artwork may be technically reimplemented or, when necessary, carefully reinvented if its original software environment can no longer be preserved, executed, emulated, or meaningfully maintained. Any reinterpretation must protect the conceptual identity, deterministic generative logic, behavioural continuity, and interactive character of the work.",
+  "core_principles": [
+    {
+      "principle": "Preserve identity before implementation",
+      "description": "The identity of the artwork does not depend on one specific programming language, graphics API, browser, operating system, library, or hardware configuration. Its identity is carried by the relationship between its deterministic parameters, generative rules, temporal behaviour, visual structure, and interactive response."
+    },
+    {
+      "principle": "Prefer conservation, allow reimplementation",
+      "description": "Whenever possible, the original implementation should be preserved, documented, and made accessible. When the original implementation can no longer function reliably, a new implementation may be created using contemporary technologies."
+    },
+    {
+      "principle": "Allow reinvention only when necessary",
+      "description": "Reinvention is acceptable when conservation, emulation, dependency repair, or direct migration can no longer provide a viable or meaningful presentation of the work. Reinvention must not be used merely to modernize the work aesthetically or replace its identity with a new artistic interpretation."
+    },
+    {
+      "principle": "Preserve behavioural continuity",
+      "description": "A future implementation should preserve the conceptual role of the original generative parameters and should reproduce equivalent relationships between form, movement, variation, timing, and interaction, even when exact low-level rendering results cannot be reproduced."
+    },
+    {
+      "principle": "Preserve interactivity",
+      "description": "Interactivity is an essential property of the work. A non-interactive capture, video, screenshot, or static reconstruction may be used for documentation, study, or emergency access, but must not replace the interactive work as its canonical form."
+    },
+    {
+      "principle": "Document every substantial change",
+      "description": "Every migration, reimplementation, reinterpretation, or reinvention should be documented with its purpose, technical method, responsible parties, date, renderer hash, storage reference, known differences, and justification."
+    }
+  ],
+  "preservation_hierarchy": [
+    {
+      "priority": 1,
+      "strategy": "Preserve and maintain the original renderer",
+      "description": "Retain the original files, dependencies, hashes, documentation, and execution requirements whenever feasible."
+    },
+    {
+      "priority": 2,
+      "strategy": "Repair or update dependencies",
+      "description": "Apply limited technical changes required to restore compatibility while preserving behaviour and identity."
+    },
+    {
+      "priority": 3,
+      "strategy": "Emulate the original environment",
+      "description": "Use browser, operating-system, hardware, or software emulation when this provides a faithful and sustainable presentation."
+    },
+    {
+      "priority": 4,
+      "strategy": "Migrate or reimplement",
+      "description": "Port the work to a new graphics API, programming environment, browser platform, or hardware system while preserving its generative and interactive logic."
+    },
+    {
+      "priority": 5,
+      "strategy": "Reinvent under documented constraints",
+      "description": "Create a new technical realization only when earlier strategies are no longer viable. The reinvention must remain recognizably continuous with the work's conceptual, behavioural, and generative identity."
+    }
+  ],
+  "allowed_migrations": [
+    "browser_compatibility_update",
+    "dependency_update",
+    "operating_system_migration",
+    "hardware_migration",
+    "graphics_api_migration",
+    "webgl_to_webgpu",
+    "renderer_reimplementation",
+    "emulation",
+    "accessibility_adaptation",
+    "performance_optimization",
+    "documented_reinvention_when_original_execution_is_no_longer_viable"
+  ],
+  "conditions_for_reinterpretation_or_reinvention": [
+    "The original implementation can no longer be executed, maintained, emulated, or safely exhibited.",
+    "The change is necessary for continued access, preservation, or meaningful presentation.",
+    "The deterministic identity-defining parameters remain authoritative.",
+    "The conceptual role of the generative system is preserved.",
+    "Interactive behaviour remains available unless a temporary non-interactive surrogate is clearly labelled as documentation.",
+    "The new implementation does not introduce arbitrary aesthetic changes unrelated to preservation needs.",
+    "All substantial differences from the original renderer are documented.",
+    "The new renderer is registered with verifiable provenance before it is treated as canonical."
+  ],
+  "identity_defining_parameters": [
+    {
+      "parameter": "seed",
+      "requirement": "Must remain unchanged for the same token. It is the primary deterministic identifier of the edition."
+    },
+    {
+      "parameter": "mode",
+      "requirement": "Must remain unchanged for the same token. It defines a fundamental behavioural configuration of the edition."
+    }
+  ],
+  "rendering_related_parameters": [
+    {
+      "parameter": "personalityA",
+      "requirement": "May be technically reinterpreted when necessary, provided its conceptual and behavioural function remains consistent."
+    },
+    {
+      "parameter": "personalityB",
+      "requirement": "May be technically reinterpreted when necessary, provided its conceptual and behavioural function remains consistent."
+    },
+    {
+      "parameter": "personalityC",
+      "requirement": "May be technically reinterpreted when necessary, provided its conceptual and behavioural function remains consistent."
+    }
+  ],
+  "forbidden_actions": [
+    "changing_seed",
+    "changing_mode",
+    "changing_identity_parameters",
+    "removing_interactivity",
+    "static_capture_as_canonical",
+    "unregistered_renderer_override"
+  ],
+  "authenticity_rule": "seed_must_match",
+  "authenticity_criteria": [
+    "The token seed used by the renderer must match the seed stored on-chain.",
+    "The token mode must match the mode stored on-chain.",
+    "Identity-defining parameters must not be regenerated, substituted, or reassigned.",
+    "The renderer must preserve the conceptual function of the generative and interactive system.",
+    "A renderer treated as canonical should be registered in the contract's renderer provenance history.",
+    "Any known divergence from the original renderer should be disclosed in the associated preservation documentation."
+  ],
+  "interactivity_statement": "Interactivity is integral to the artwork and must remain available in canonical presentations. Static images and video recordings are valid as documentation, previews, or emergency surrogates, but they are not equivalent to the interactive artwork and must not be designated as its canonical implementation.",
+  "visual_and_behavioural_tolerance": {
+    "acceptable": [
+      "Minor visual differences caused by graphics APIs, browsers, displays, antialiasing, numerical precision, or hardware.",
+      "Performance adaptations that do not alter the conceptual timing or behavioural relationships of the work.",
+      "Interface adjustments required for contemporary devices or accessibility, provided the interactive logic remains intact.",
+      "Technical reconstruction of unavailable effects using functionally equivalent methods."
+    ],
+    "not_acceptable": [
+      "Changing the deterministic seed or mode of an existing token.",
+      "Replacing generative behaviour with a fixed animation or prerecorded sequence.",
+      "Removing meaningful user interaction from the canonical implementation.",
+      "Introducing aesthetic redesigns that substantially change the identity of the work.",
+      "Presenting an undocumented or unregistered renderer as authoritative."
+    ]
+  },
+  "canonical_renderer_policy": "The original renderer should remain permanently documented as the historical source implementation. A later renderer may become canonical when it provides a more sustainable, accessible, or technically viable realization of the work while respecting this statement. Canonical designation does not erase or invalidate earlier renderer versions.",
+  "documentation_requirements": [
+    "Reason for the intervention",
+    "Description of the technical problem",
+    "Preservation strategy selected",
+    "Renderer hash and storage reference",
+    "Date and responsible person or institution",
+    "Dependencies and execution requirements",
+    "Known visual, behavioural, or interactive differences",
+    "Testing method used to compare the new implementation with the original",
+    "Justification for canonical designation, when applicable"
+  ],
+  "off_chain_preservation_recommendations": [
+    "Preserve source files and build instructions when available.",
+    "Preserve dependency manifests and version information.",
+    "Preserve screenshots, videos, and interaction recordings as reference documentation.",
+    "Preserve technical and curatorial reports.",
+    "Maintain redundant copies across IPFS, institutional archives, and other trusted storage systems.",
+    "Record backup locations through the contract's decentralized storage backup registry."
+  ],
+  "full_statement": "OODebris is conceived as a living generative and interactive artwork whose identity is not limited to a single software implementation. Its original renderer is historically important and should be preserved, but technological obsolescence must not prevent the work from continuing to exist and be experienced. If the original implementation can no longer function, the work may be migrated, reimplemented, or, where conservation is no longer technically viable, carefully reinvented. Such reinvention is legitimate only when it remains faithful to the work's deterministic identity, generative structure, behavioural logic, temporal qualities, and interactive nature. The purpose of intervention is continuity, not aesthetic replacement. Future custodians may change the technological means, but they should preserve the conceptual relationships that make each edition identifiable as the same artwork. Every substantial intervention must remain transparent, documented, attributable, and connected to the renderer provenance recorded by the contract."
+}
