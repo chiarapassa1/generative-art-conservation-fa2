@@ -1,76 +1,81 @@
-# Usage Guide
-
-## Mint a token
+Usage Guide
+Mint a token
 
 The administrator (artist) mints a token and assigns it to a destination address.
 
-During minting the contract also generates deterministic parameters that define the behaviour of the generative sculpture.
+During minting, the contract generates deterministic parameters defining the behaviour of the generative artwork.
 
-These parameters include:
+Each token stores:
 
-- `seed`
-- `mode`
-- `personalityA`
-- `personalityB`
-- `personalityC`
+seed
+mode
+personalityA
+personalityB
+personalityC
 
-They are stored on-chain and used by the artwork viewer to render the sculpture.
+These parameters constitute the generative identity of the artwork and can be retrieved through on-chain views.
 
-## Authorize a conservator
+Register the original renderer
 
-The administrator can authorize a conservator address.
+After minting, the administrator may register the original renderer associated with a token.
 
-Authorized conservators can participate in the conservation workflow by recording restoration events for a token.
+The contract stores:
 
-## Log a restoration
+immutable renderer hash
+renderer CID
+registration metadata
 
-A restoration record can be appended by:
+The original renderer can only be registered once.
 
-- the token owner
-- an authorized conservator
-- the administrator (artist)
+Register renderer versions
 
-The entry usually contains a CID pointing to a conservation document stored on IPFS.
+Additional renderer implementations can be registered whenever the artwork is migrated or adapted to new execution environments.
 
-Examples of restoration documents include:
+Each version records:
 
-- migration reports
-- technical compatibility reports
-- exhibition packages
-- browser support documentation
-- checksum audits
+renderer hash
+renderer CID
+descriptive note
+registration timestamp
+registering address
 
-## Add an artifact version
+Renderer histories are append-only.
 
-The administrator can register a canonical artifact version for a token.
+Select the canonical renderer
 
-This records a reference implementation of the artwork after an update or migration.
+The administrator may designate one registered renderer version as the current canonical implementation.
 
-Typical examples:
+Changing the canonical renderer does not remove previous versions, allowing conservation decisions to remain fully documented.
 
-- `v1.0_webgl`
-- `v2.0_webgpu`
-- `v2.1_browser_patch`
+Configure artist intent
 
-## Update artist intent
+The administrator can update preservation-related information stored on-chain.
 
-The administrator can update the artist intent configuration stored in the contract.
+Supported fields include:
 
-This may include:
+acceptable reinterpretation
+interactivity requirement
+artist intent document (intent_cid)
+allowed migrations
+forbidden actions
+authenticity rule
 
-- acceptable reinterpretation policies
-- whether interactivity must be preserved
-- allowed migration types
-- forbidden actions
-- references to an off-chain artist intent document (`intent_cid`)
+Every modification is recorded in an append-only intent history.
 
-## Direct sales from a website
+Define edition behaviours
 
-For direct sales from a website, keep the artwork token as an **FA2 NFT**.
+Each generative mode (0–9) may be associated with a human-readable label and a description document.
 
-Two common approaches are:
+This allows every edition of the artwork to carry its own conservation and interpretative documentation.
 
-- use a **sale contract** that receives tez and mints or transfers the NFT
-- add a public **buy() or mint() entrypoint**
+Configure parameter identity
 
-From the frontend, connect the user wallet (for example **Temple**) through **Beacon**.
+The administrator may specify whether a generative parameter is identity-defining or rendering-related.
+
+Identity-defining parameters should remain unchanged to preserve the artwork's identity, while rendering parameters may be adapted during future conservation activities.
+
+Register decentralized storage backups
+
+Alternative storage locations can be registered for preservation resources such as artist intent documents.
+
+Multiple backup URIs may be associated with the same resource, facilitating long-term preservation across decentralized storage systems.
