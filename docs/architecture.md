@@ -1,6 +1,6 @@
 # Architecture
 
-# Overview
+## Overview
 
 The contract combines a Tezos FA2 NFT ownership layer with preservation-oriented metadata for generative and software-based artworks.
 
