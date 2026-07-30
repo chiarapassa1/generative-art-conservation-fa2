@@ -500,7 +500,7 @@ def test():
     c.update_artist_intent(
         key="intent_cid",
         value_bool=False,
-        value_string="ipfs://bafkreid4bjhylhm5xe6d3c5tzojoq3czzxvisbjbq7xnntcfwttr3in24u",
+        value_string="ipfs://bafkreidf5irhedjicalv6dnoxpf7yl2yiqchr2athdh6tr2zhvvox5jxbe",
         value_list=[],
         _sender=ADMIN_REAL,
     )
@@ -622,7 +622,7 @@ def test():
         c.set_edition_behaviour(
             mode=i,
             label=edition_labels[i],
-            description_cid="ipfs://bafkreiedition%d" % i,
+            description_cid="ipfs://bafkreiezsxc5a7prbvfmvuclgy3ns3vbycgxkkh7unhrumayvzfbpm5wye",
             _sender=ADMIN_REAL,
         )
     scenario.show(c.get_edition_behaviour(3))
