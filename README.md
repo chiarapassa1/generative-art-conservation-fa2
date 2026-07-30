@@ -1,358 +1,240 @@
-Generative Conservation FA2
+# Generative Conservation FA2
 
-SmartPy FA2 contract for generative artworks on Tezos with on-chain
-conservation records and generative behaviour parameters.
+SmartPy implementation of the Tezos FA2 standard for the long-term preservation of generative and software-based artworks.
 
-Author: Chiara Passa
-December 2025
+**Author:** Chiara Passa  
+**December 2025**
 
-Example artwork
+---
+
+## Example artwork
 
 ![Example artwork](assets/OODebris0.jpg)
 
-Interaction demo
+---
+
+## Interaction demo
 
 https://www.youtube.com/shorts/nrU4b1iR_uM
 
-This project explores how blockchain infrastructure can support the
-long-term preservation of generative and software‑based artworks, not
-only recording ownership but also documenting the technical life and
-behavioural parameters of an artwork over time.
+---
 
-The contract is written in SmartPy and targets the Tezos FA2 token
-standard.
+# Overview
 
-The contract extends a standard FA2 NFT model with structures designed
-to record:
+**Generative Conservation FA2** extends the Tezos FA2 NFT standard with a preservation-oriented layer designed specifically for generative and software-based artworks.
 
--   generative behaviour parameters
--   restoration events
--   canonical artifact versions
--   artist intent statements
--   authorized conservators
+Rather than treating an NFT solely as a proof of ownership, the project records the information required to preserve a generative artwork throughout its technical evolution.
 
-The goal is to create a framework where ownership, behaviour,
-conservation, and documentation coexist on‑chain.
+The contract combines standard FA2 ownership with:
 
-------------------------------------------------------------------------
+- deterministic generative identity
+- artist intent
+- renderer provenance
+- structured preservation metadata
 
-WHY THIS PROJECT EXISTS
+The goal is to support the long-term authenticity, migration, documentation, and reconstruction of generative artworks while remaining compatible with the FA2 ecosystem.
 
-Generative and software‑based artworks evolve over time.
+---
 
-Browsers change, rendering engines are deprecated, dependencies break,
-and exhibition contexts vary. Traditional NFT contracts typically record
-ownership and transfer, but they rarely document how an artwork is
-preserved or migrated technically.
+# Why this project exists
 
-This project introduces a conservation‑oriented layer around an FA2 NFT
-contract that allows artworks to maintain a traceable preservation
-history.
+Generative artworks depend on software.
 
-Examples of recorded events may include:
+Browsers evolve, rendering engines become obsolete, libraries disappear, and execution environments change over time. Preserving a generative artwork therefore requires preserving not only ownership, but also the information needed to understand how the work should behave and how it may evolve without losing its identity.
 
--   browser compatibility updates
--   migration from WebGL to WebGPU
--   conservation documentation
--   exhibition‑specific technical adjustments
--   archival snapshots of the artwork
+Traditional NFT contracts generally record ownership and metadata.
 
-The result is not just an NFT contract, but a framework for thinking
-about digital art preservation on‑chain.
+This project explores how blockchain infrastructure can additionally support digital preservation by documenting the technical and conceptual evolution of an artwork throughout its lifetime.
 
-------------------------------------------------------------------------
+---
 
-EXAMPLE CONSERVATION WORKFLOW
+# Core concepts
 
-1.  The artist mints an artwork token.
-2.  The behaviour of the digital sculpture is defined by on‑chain
-    parameters.
-3.  The artwork is collected by a collector.
-4.  A museum conservator is authorized.
-5.  A migration is performed (for example WebGL → WebGPU).
-6.  A migration report is uploaded to IPFS.
-7.  The report CID is appended to the restoration log.
-8.  The updated implementation is registered as a new canonical artifact
-    version.
+The contract is organized around four complementary concepts.
 
-This creates a transparent conservation history for the artwork.
+## Generative identity
 
-------------------------------------------------------------------------
+Each token stores deterministic parameters generated during minting.
 
-CORE IDEAS
+These parameters define the identity and behaviour of the artwork and are available on-chain for future compatible implementations.
 
-OWNERSHIP
+The contract also distinguishes which parameters define the artwork's identity and which may be adapted during future preservation activities.
 
-Each token represents an artwork edition and has an owner. Tokens follow
-the FA2 standard and can be transferred normally.
+---
 
-------------------------------------------------------------------------
+## Artist intent
 
-GENERATIVE BEHAVIOUR PARAMETERS
+The contract stores structured preservation metadata describing the artist's intentions for the collection.
 
-Each token stores deterministic parameters that define the behaviour of
-the generative sculpture.
+This includes:
 
-These parameters are generated at mint time and stored on‑chain:
+- acceptable reinterpretation
+- interactivity requirements
+- allowed migration strategies
+- forbidden preservation actions
+- authenticity rules
+- reference to a complete off-chain artist intent document
 
-seed
-mode
-personalityA
-personalityB
-personalityC
+Every modification is preserved through an append-only intent history.
 
-The artwork viewer uses these parameters to determine the behaviour of
-the digital sculpture, including variations in form, motion, and
-interaction.
+---
 
-Because these parameters are recorded on‑chain, the behaviour of each
-edition can always be reconstructed.
+## Renderer provenance
 
-------------------------------------------------------------------------
+Software inevitably changes.
 
-RESTORATION LOG
+Instead of overwriting previous implementations, the contract maintains provenance for every registered renderer associated with a token.
 
-Each token can accumulate a list of restoration records.
+It records:
 
-These records typically point to IPFS documents containing:
+- the original renderer
+- subsequent renderer versions
+- the canonical renderer currently recognized for the artwork
 
--   migration reports
--   conservation notes
--   technical snapshots
--   institutional documentation
+This allows future conservators and institutions to reconstruct the software history of each edition.
 
-------------------------------------------------------------------------
+---
 
-CANONICAL ARTIFACT VERSIONS
+## Preservation metadata
 
-A token can maintain a list of canonical artifact implementations such
-as:
+Large preservation resources remain off-chain.
 
--   WebGL implementation
--   WebGPU migration
--   browser compatibility update
--   exhibition‑specific restoration package
+The contract stores compact references to resources such as:
 
-This allows future stewards to understand which implementation
-represents the authoritative version of the artwork.
+- artist intent statements
+- references to renderer implementations
+- technical documentation
+- decentralized backup locations
 
-------------------------------------------------------------------------
+The blockchain therefore acts as a verifiable preservation index rather than an archival storage system.
 
-ARTIST INTENT
+---
 
-The contract stores contract‑level intent data that clarifies the
-conceptual boundaries of the work.
+# Main features
 
-Examples include:
+The current contract includes:
 
--   whether reinterpretation is acceptable
--   whether interactivity must be preserved
--   a CID linking to an artist intent statement
--   allowed migration types
--   forbidden actions
+- FA2 NFT ownership
+- administrator-controlled minting
+- deterministic on-chain generative parameters
+- parameter identity classification
+- collection-level artist intent
+- append-only artist intent history
+- immutable original renderer registration
+- renderer provenance tracking
+- canonical renderer designation
+- edition behaviour documentation
+- decentralized preservation references
 
-This information is particularly useful for archives, museums, and
-future technical conservators.
+---
 
-------------------------------------------------------------------------
+# Typical preservation workflow
 
-PERMISSIONS OVERVIEW
+A typical lifecycle is:
 
-  Action                  Who can execute
-  ----------------------- -------------------------------------
-  Mint token              Administrator (artist)
-  Transfer token          Owner
-  Log restoration         Owner / Conservator / Administrator
-  Add artifact version    Administrator
-  Authorize conservator   Administrator
-  Update artist intent    Administrator
+1. Mint a new artwork token.
+2. Generate deterministic on-chain parameters.
+3. Register the original renderer.
+4. Transfer ownership through the FA2 standard.
+5. Register future renderer implementations when migrations become necessary.
+6. Designate the canonical renderer.
+7. Update preservation metadata whenever required.
+8. Preserve the complete provenance history on-chain.
 
-------------------------------------------------------------------------
+---
 
-METADATA STRUCTURE
+# Documentation
 
-Example token metadata files are included in the repository.
+Detailed documentation is available in the `docs/` directory.
 
-Wallet addresses in this repository are replaced with placeholders such
-as:
+### `architecture.md`
 
-tz…Your Wallet
+Describes the overall contract architecture, storage model, preservation workflow, renderer provenance, and permission model.
 
-The deployed contract and minted tokens use the correct creator address.
+### `usage.md`
 
-Metadata typically includes:
+Provides a practical guide to the contract entrypoints and the recommended preservation workflow.
 
--   artwork description
--   preview images
--   interactive viewer (animationUri)
--   royalty configuration
--   attributes for indexing
--   conservation references
+### `artist-intent.md`
 
-Interactive artworks can be rendered through an external viewer linked
-in the metadata.
+Explains artist intent fields, authenticity rules, identity-defining parameters, and preservation policies.
 
-------------------------------------------------------------------------
+---
 
-REPOSITORY STRUCTURE
+# Repository structure
 
+```text
 generative-conservation-fa2/
 
-contract/
-  generative_conservation_fa2.py
+├── assets/
+├── contract/
+│   └── generative_conservation_fa2.py
+│
+├── docs/
+│   ├── architecture.md
+│   ├── usage.md
+│   └── artist-intent.md
+│
+├── examples/
+├── metadata/
+│
+├── LICENSE
+└── README.md
+```
 
-metadata/
-  canonical_artifact_v1.json
-  contract_metadata.json
-  token_0_metadata.json
-  ...
-  token_9_metadata.json
+---
 
-docs/
-  architecture.md
-  artist-intent.md
-  usage.md
+# Getting started
 
-examples/
-  ORED_token0_v2.0_webgpu.json
+Open the SmartPy IDE:
 
-assets/
-  architecture.png
-  OODebris0.jpg
-  OODebris2.jpg
-  OODebris4.jpg
-  OODebris7.jpg
-  OODebris9.jpg
-  o-debris-passa.mp4
-
-LICENSE
-README.md
-
-------------------------------------------------------------------------
-
-WHAT THE CONTRACT IMPLEMENTS
-
-The FA2 contract prototype includes:
-
--   admin‑controlled minting
--   NFT ownership tracking
--   token transfers
--   generative parameter storage
--   authorized conservators
--   restoration logging
--   canonical artifact version registration
--   artist intent updates
-
-The contract extends the FA2 model without breaking compatibility with
-common Tezos NFT workflows.
-
-------------------------------------------------------------------------
-
-HOW TO USE THIS REPOSITORY
-
-Open SmartPy
-
-This contract was developed using the SmartPy online IDE:
 https://smartpy.io/ide
 
-Open the IDE and create a new project, or paste the contract code from
-this repository into the editor.
+Then:
 
-Review the contract
+1. Open the contract.
+2. Configure the administrator address.
+3. Configure contract metadata.
+4. Run the included SmartPy tests.
+5. Compile to Michelson.
+6. Deploy to Ghostnet before deploying to Tezos Mainnet.
 
-Open the contract file:
+---
 
-contract/generative_conservation_fa2.py
-
-This file contains the FA2 implementation together with the conservation
-and generative behaviour logic.
-
-Configure deployment
-
-Before deployment update:
-
--   administrator wallet address
--   contract metadata URI
--   collection‑level metadata
--   token metadata generation workflow
-
-Test in the SmartPy IDE
-
-Use the SmartPy test scenario included in the contract to simulate:
-
--   minting tokens
--   generative behaviour parameter creation
--   restoration logs
--   artifact version updates
--   conservator permissions
-
-Compile and deploy
-
-Use the Compile button in the SmartPy IDE to generate the Michelson
-contract.
-
-Recommended workflow:
-
-deploy first to Ghostnet
-test minting and transfers
-deploy to Tezos Mainnet when ready
-
-Connect it to a website
-
-For direct sales from your website:
-
--   keep the artwork token as FA2
--   add either a buy() entrypoint in the contract or a separate sale
-    contract
-
-Wallets such as Temple can be connected from the frontend through
-Beacon.
-
-------------------------------------------------------------------------
-
-SUGGESTED USE CASES
+# Suggested use cases
 
 This framework can support:
 
--   generative 1/1 artworks
--   museum acquisition records
--   software‑based art conservation
--   browser or engine migration tracking
--   preservation of artist intent
--   archival documentation linked to NFTs
+- generative artworks
+- software-based art
+- museum collections
+- digital preservation research
+- renderer provenance
+- artist intent preservation
+- decentralized archival references
 
-------------------------------------------------------------------------
+---
 
-IMPORTANT NOTE
+# Conceptual framing
 
-This repository is an artistic and research‑oriented prototype.
+Rather than preserving software itself, the contract preserves the information required to understand, authenticate, migrate, and reconstruct a generative artwork over time.
 
-Before production use with significant economic value, the contract
-should be carefully reviewed and audited. Particular attention should be
-given to:
+Ownership follows the standard FA2 model, while preservation-related information—including generative identity, artist intent, renderer provenance, and decentralized documentation—is maintained as structured on-chain metadata.
 
--   permission management
--   transfer logic
--   burn policy
--   token metadata format
--   marketplace compatibility
--   sale logic for direct website sales
+The result is a preservation-oriented framework built on top of the Tezos FA2 standard.
 
-------------------------------------------------------------------------
+---
 
-CONCEPTUAL FRAMING
+# Important note
 
-A concise description of the project:
+This repository is an artistic and research-oriented prototype intended to explore blockchain-assisted preservation of generative and software-based art.
 
-A blockchain‑assisted conservation framework for generative and
-software‑based art on Tezos that links behaviour, ownership, and
-preservation history.
+Before production deployment, the contract should be carefully reviewed and independently audited.
 
-------------------------------------------------------------------------
+---
 
-License
+# License
 
-The code in this repository is released under the MIT License.
+The source code is released under the MIT License.
 
-Artwork files, images, media assets, and generative works remain
-© Chiara Passa 2025 and may not be reused without permission.
+Artwork files, images, media assets, and generative works remain © Chiara Passa 2025 and may not be reused without permission.
