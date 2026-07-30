@@ -1,0 +1,49 @@
+{
+  "document_type": "edition_behaviours",
+  "artwork": "Object (RE) Oriented Debris",
+  "artist": "Chiara Passa",
+  "version": "1.0",
+  "description": "Canonical descriptions of the ten generative deformation modes.",
+  "behaviours": {
+    "0": {
+      "label": "Silent Withdrawal",
+      "description": "The geometry expands irregularly along its surface normals while subtle sinusoidal oscillations affect all three spatial axes."
+    },
+    "1": {
+      "label": "Residual Relation",
+      "description": "The geometry undergoes a noise-modulated rotational twist around its vertical axis."
+    },
+    "2": {
+      "label": "Signal Interference",
+      "description": "Rapid sinusoidal interference displaces the geometry along the horizontal and vertical axes."
+    },
+    "3": {
+      "label": "Orbital Shear",
+      "description": "The geometry is sheared through an orbital rotation in the XY plane while being displaced along the Z axis."
+    },
+    "4": {
+      "label": "Matter Dispersion",
+      "description": "A time-varying cellular wave pushes the geometry outward and inward along its surface normals."
+    },
+    "5": {
+      "label": "Void Collapse",
+      "description": "The geometry progressively implodes toward its center, with the collapse intensity modulated by procedural noise."
+    },
+    "6": {
+      "label": "Fragment Vector",
+      "description": "Selected high-noise regions are projected outward along radial vectors, producing shard-like fragmentation."
+    },
+    "7": {
+      "label": "Spatial Distortion",
+      "description": "The geometry is independently stretched and compressed along all three axes through time-varying anisotropic deformation."
+    },
+    "8": {
+      "label": "Surface Flux",
+      "description": "The surface flows laterally across the X and Z axes while undergoing a noise-modulated downward drift."
+    },
+    "9": {
+      "label": "Entropic Drift",
+      "description": "High-frequency oscillations affect all three axes while procedural noise introduces an additional chaotic spatial drift."
+    }
+  }
+}
