@@ -1,0 +1,426 @@
+{
+  "document_type": "renderer_technical_preservation_record",
+  "document_version": "1.0",
+  "record_date": "2026-07-31",
+  "artwork": "Object (RE) Oriented Debris One",
+  "artist": "Chiara Passa",
+  "renderer_role": "original",
+  "description": "Technical preservation record for the original interactive renderer. The record documents the exact HTML artifact, embedded media, shaders, runtime dependencies, deterministic parameters, interaction, rendering pipeline, integrity hashes and reconstruction requirements.",
+  "identification": {
+    "title_from_html": "Object (RE) Oriented Debris – Chiara Passa",
+    "source_filename_supplied": "Pasted text(106).txt",
+    "intended_entry_point": "ObjectOrientedDebris.html",
+    "year_of_artwork": 2024,
+    "interactive": true,
+    "historical_status": "original_source_renderer"
+  },
+  "artifact": {
+    "format": "HTML5",
+    "character_encoding": "UTF-8",
+    "mime_type": "text/html",
+    "size_bytes": 6282917,
+    "line_count": 763,
+    "sha256": "88e74b9884362da715af977f779d9e3e735524260901dabcd6fcc4a63b6cff0c",
+    "packaging": {
+      "single_html_document": true,
+      "embedded_inline_javascript": true,
+      "embedded_vertex_shader": true,
+      "embedded_fragment_shader": true,
+      "embedded_base64_glb": true,
+      "embedded_base64_png": true,
+      "fully_self_contained_at_runtime": false,
+      "reason_not_fully_self_contained": "Three.js, OrbitControls and GLTFLoader are loaded from external local files under the js/ directory."
+    }
+  },
+  "implementation": {
+    "document_language": "HTML",
+    "scripting_language": "JavaScript",
+    "graphics_library": "Three.js",
+    "graphics_api": "WebGL",
+    "shader_language": "GLSL ES",
+    "canvas_2d_background": true,
+    "threejs_revision": {
+      "value": null,
+      "status": "not_declared_in_html",
+      "verification_requirement": "Preserve and hash js/three.min.js to identify the exact revision."
+    },
+    "webgl_version": {
+      "value": null,
+      "status": "selected_by_THREE.WebGLRenderer_at_runtime"
+    },
+    "module_system": "classic_script",
+    "uses_es_modules": false
+  },
+  "runtime_dependencies": [
+    {
+      "name": "Three.js",
+      "path": "js/three.min.js",
+      "version": null,
+      "version_status": "not_declared_in_html",
+      "required": true
+    },
+    {
+      "name": "OrbitControls",
+      "path": "js/OrbitControls.js",
+      "version": null,
+      "version_status": "not_declared_in_html",
+      "required": true
+    },
+    {
+      "name": "GLTFLoader",
+      "path": "js/GLTFLoader.js",
+      "version": null,
+      "version_status": "not_declared_in_html",
+      "required": true
+    }
+  ],
+  "network_dependencies": [
+    {
+      "service": "TzKT API",
+      "base_url": "https://api.tzkt.io/v1/contracts/",
+      "purpose": [
+        "load token parameters",
+        "load conservation storage",
+        "check whether a token is active or burned"
+      ],
+      "required_for_preview_mode": false,
+      "required_for_on_chain_token_identity": true
+    }
+  ],
+  "contract_integration": {
+    "contract_constant": "KT1................................",
+    "status": "placeholder_in_supplied_renderer",
+    "token_id_query_parameter": "token_id",
+    "token_parameter_big_map": "token_params",
+    "token_metadata_big_map": "token_metadata",
+    "storage_fields_read": [
+      "allowed_migrations",
+      "forbidden_actions",
+      "acceptable_reinterpretation",
+      "requires_interactivity",
+      "intent_cid",
+      "authenticity_rule",
+      "renderer_original_hash",
+      "renderer_history",
+      "renderer_canonical_version",
+      "edition_behaviours"
+    ]
+  },
+  "inline_javascript": {
+    "embedded": true,
+    "size_bytes_utf8": 6281514,
+    "line_count": 698,
+    "sha256": "7c697a253e946bb4455ee33bf2446ecb904ed8f74c470273c2a1e99133993ca4"
+  },
+  "shaders": {
+    "vertex_shader": {
+      "embedded": true,
+      "language": "GLSL ES",
+      "size_bytes_utf8": 3197,
+      "line_count": 116,
+      "sha256": "d6f3fba5ba964479cdea3890ef43e940220d71bb900830180074e427c41bd6a0",
+      "uniforms": [
+        "time",
+        "deform",
+        "deformMode",
+        "modeParams1",
+        "modeParams2"
+      ],
+      "attributes_used": [
+        "position",
+        "normal",
+        "uv"
+      ],
+      "built_in_matrices_used": [
+        "projectionMatrix",
+        "modelViewMatrix"
+      ],
+      "varyings": [
+        "vUv",
+        "vNormal",
+        "vNoise"
+      ],
+      "deformation_modes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "source": "\nuniform float time;\nuniform float deform;\nuniform int deformMode;\nuniform vec4 modeParams1;\nuniform vec3 modeParams2;\n\nvarying vec2 vUv;\nvarying vec3 vNormal;\nvarying float vNoise;\n\nfloat hash(vec3 p){\n  p = fract(p*0.3183099 + vec3(0.1,0.2,0.3));\n  p *= 17.0;\n  return fract(p.x*p.y*p.z*(p.x+p.y+p.z));\n}\n\nfloat noise(vec3 p){\n  vec3 i=floor(p);\n  vec3 f=fract(p);\n  f=f*f*(3.0-2.0*f);\n  return mix(\n    mix(\n      mix(hash(i+vec3(0.0)),hash(i+vec3(1.0,0.0,0.0)),f.x),\n      mix(hash(i+vec3(0.0,1.0,0.0)),hash(i+vec3(1.0,1.0,0.0)),f.x),\n      f.y\n    ),\n    mix(\n      mix(hash(i+vec3(0.0,0.0,1.0)),hash(i+vec3(1.0,0.0,1.0)),f.x),\n      mix(hash(i+vec3(0.0,1.0,1.0)),hash(i+vec3(1.0,1.0,1.0)),f.x),\n      f.y\n    ),\n    f.z\n  );\n}\n\nvoid main(){\n  vUv = uv;\n  vNormal = normalize(normal);\n  vec3 pos = position;\n\n  float deformScale = modeParams1.x;\n  float freqScale   = modeParams1.y;\n  float swirlScale  = modeParams1.z;\n  float noiseScale  = modeParams1.w;\n\n  float twistScale  = modeParams2.x;\n  float gravityScale= modeParams2.y;\n  float chaosScale  = modeParams2.z;\n\n  float n = noise(pos*(2.0 + deform*0.5*noiseScale) + time*0.2);\n  vNoise = n;\n\n  float d = deform * deformScale;\n\n  if (deformMode == 0) {\n    pos += vNormal * n * d * 6.9;\n    pos.x += sin(pos.y*9.0*freqScale + time*0.7)*d*0.09;\n    pos.y += cos(pos.z*9.0*freqScale + time*0.6)*d*0.09;\n    pos.z += sin(pos.x*10.0*freqScale+ time*0.8)*d*0.09;\n  }\n  else if (deformMode == 1) {\n    float ang = d * 21.0 * n * twistScale;\n    float s = sin(ang), c = cos(ang);\n    pos = vec3(\n      c*pos.x - s*pos.z,\n      pos.y,\n      s*pos.x + c*pos.z\n    );\n  }\n  else if (deformMode == 2) {\n    pos.y += sin(pos.x*9.0*freqScale + time*7.0)*d*0.5;\n    pos.x += sin(pos.y*8.0*freqScale + time*5.5)*d*0.9;\n  }\n  else if (deformMode == 3) {\n    float r = length(pos.xy);\n    float ang = atan(pos.y,pos.x) + d * 29.0 * n * swirlScale;\n    pos.x = r * cos(ang);\n    pos.y = r * sin(ang);\n    pos.z += d * 9.9 * n;\n  }\n  else if (deformMode == 4) {\n    float cell = sin(pos.x*8.0*freqScale + pos.y*9.0*freqScale + pos.z*9.0*freqScale + time*4.0);\n    pos += vNormal * cell * d * 9.15;\n  }\n  else if (deformMode == 5) {\n    float impl = d * (0.9 + n*0.6);\n    pos -= normalize(pos + vec3(0.0001)) * impl;\n  }\n  else if (deformMode == 6) {\n    vec3 dir = normalize(pos + vec3(0.0001));\n    float shard = step(0.7, n) * d * 0.9 * chaosScale;\n    pos += dir * shard;\n  }\n  else if (deformMode == 7) {\n    float k = d * 9.9;\n    pos.x *= (1.0 + k * sin(time + n*5.0*freqScale));\n    pos.y *= (1.0 + k * cos(time*0.8 + n*4.0*freqScale));\n    pos.z *= (1.0 + k * sin(time*2.3 + n*3.0*freqScale));\n  }\n  else if (deformMode == 8) {\n    float flow = sin(pos.y * 3.0*freqScale + time*4.0)*d*2.15;\n    pos.x += flow * (n*2.0 - 1.0);\n    pos.z += flow * (n*2.0 - 1.0);\n    pos.y -= d * 0.2 * (0.5 + n) * gravityScale;\n  }\n  else if (deformMode == 9) {\n    pos.x += sin(pos.y * 20.0*freqScale + time*5.0)*d*0.1;\n    pos.y += sin(pos.z * 25.0*freqScale + time*4.0)*d*0.1;\n    pos.z += sin(pos.x * 30.0*freqScale + time*3.0)*d*0.9;\n    pos += vec3(n - 0.5) * d * 0.5 * chaosScale;\n  }\n\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.0);\n}\n"
+    },
+    "fragment_shader": {
+      "embedded": true,
+      "language": "GLSL ES",
+      "size_bytes_utf8": 323,
+      "line_count": 15,
+      "sha256": "4c2d698eb65c76555915ba99e3e9d68c4b709b958df00254735e23e7b0d349b3",
+      "uniforms": [
+        "map",
+        "time",
+        "deform"
+      ],
+      "varyings": [
+        "vUv",
+        "vNormal",
+        "vNoise"
+      ],
+      "texture_lookup": "texture2D",
+      "lighting": "single hard-coded directional diffuse term",
+      "source": "\nuniform sampler2D map;\nuniform float time;\nuniform float deform;\nvarying vec2 vUv;\nvarying vec3 vNormal;\nvarying float vNoise;\n\nvoid main(){\n  vec4 tex = texture2D(map, vUv);\n  vec3 light = normalize(vec3(0.3,1.0,0.4));\n  float diff = 0.4 + 0.6*max(0.0, dot(vNormal, light));\n  gl_FragColor = vec4(tex.rgb * diff, 1.0);\n}\n"
+    }
+  },
+  "embedded_resources": {
+    "model": {
+      "container": "GLB",
+      "glTF_version": "2.0",
+      "encoding_in_html": "Base64",
+      "base64_character_count": 5201360,
+      "decoded_size_bytes": 3901020,
+      "declared_glb_length_bytes": 3901020,
+      "sha256_decoded": "0b1ab02ab7edcd38decf455ca37496442d841bfeb5dd86f9a741b83349148550",
+      "generator": "Khronos glTF Blender I/O v3.6.27",
+      "copyright": "chiarapassa",
+      "scene_count": 1,
+      "node_count": 1,
+      "mesh_count": 1,
+      "material_count": 1,
+      "primitive_count": 1,
+      "vertex_count": 86200,
+      "index_count": 86202,
+      "attributes": [
+        "POSITION",
+        "NORMAL",
+        "TEXCOORD_0"
+      ],
+      "extensions_used": [
+        "KHR_materials_specular",
+        "KHR_materials_ior"
+      ],
+      "contains_embedded_png_texture": true
+    },
+    "texture": {
+      "format": "PNG",
+      "mime_type": "image/png",
+      "encoding_in_html": "Base64",
+      "base64_character_count": 1061560,
+      "decoded_size_bytes": 796168,
+      "dimensions_pixels": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256_decoded": "9c363fde4f8fe543d5fe3144c9af541f6b56e8a265744f021c4a273f3e198117",
+      "threejs_flip_y": false,
+      "also_embedded_inside_glb": true,
+      "glb_embedded_copy_sha256": "9c363fde4f8fe543d5fe3144c9af541f6b56e8a265744f021c4a273f3e198117",
+      "duplication_note": "The standalone Base64 PNG is byte-identical to the PNG already embedded inside the GLB. The renderer explicitly loads the standalone copy and assigns it to the custom ShaderMaterial."
+    }
+  },
+  "scene_configuration": {
+    "camera": {
+      "type": "PerspectiveCamera",
+      "field_of_view_degrees": 60,
+      "aspect": "window.innerWidth / window.innerHeight",
+      "near": 0.1,
+      "far": 100,
+      "initial_position": [
+        0,
+        0.3,
+        2.2
+      ]
+    },
+    "renderer": {
+      "type": "THREE.WebGLRenderer",
+      "antialias": true,
+      "alpha": true,
+      "pixel_ratio": "devicePixelRatio || 1",
+      "clear_color": "#000000",
+      "clear_alpha": 0
+    },
+    "controls": {
+      "type": "THREE.OrbitControls",
+      "damping": true,
+      "damping_factor": 0.05,
+      "pan": false,
+      "rotate": true,
+      "zoom": true
+    },
+    "lighting": [
+      {
+        "type": "AmbientLight",
+        "color": "#ffffff",
+        "intensity": 0.3
+      }
+    ],
+    "material": {
+      "type": "THREE.ShaderMaterial",
+      "side": "THREE.DoubleSide",
+      "uniforms": [
+        "time",
+        "deform",
+        "deformMode",
+        "modeParams1",
+        "modeParams2",
+        "map"
+      ]
+    }
+  },
+  "deterministic_parameters": {
+    "identity_defining": [
+      {
+        "name": "seed",
+        "source": "on-chain token_params",
+        "preservation_requirement": "must remain unchanged for the same token",
+        "renderer_usage_observed": "Loaded into NFT_PARAMS but not directly consumed by the supplied shader or generateModeParameters function."
+      },
+      {
+        "name": "mode",
+        "source": "on-chain token_params",
+        "range": [
+          0,
+          9
+        ],
+        "preservation_requirement": "must remain unchanged for the same token",
+        "renderer_usage_observed": "selects one of ten vertex-deformation branches"
+      }
+    ],
+    "rendering_related": [
+      {
+        "name": "personalityA",
+        "source": "on-chain token_params",
+        "normalization": "value / 10000",
+        "usage": "modifies modeParams1.x, modeParams1.w and modeParams2.x"
+      },
+      {
+        "name": "personalityB",
+        "source": "on-chain token_params",
+        "normalization": "value / 10000",
+        "usage": "modifies modeParams1.y and modeParams2.y"
+      },
+      {
+        "name": "personalityC",
+        "source": "on-chain token_params",
+        "normalization": "value / 10000",
+        "usage": "modifies modeParams1.z and modeParams2.z"
+      }
+    ],
+    "preview_mode": {
+      "active_when_token_id_absent": true,
+      "randomness_sources": [
+        "Math.random for shuffled mode deck",
+        "Math.random for personality jitter",
+        "Math.random for Perlin permutation initialization"
+      ],
+      "reset_key": "R",
+      "on_chain_token_reset_disabled": true
+    }
+  },
+  "behaviour_modes": {
+    "0": "Silent Withdrawal",
+    "1": "Residual Relation",
+    "2": "Signal Interference",
+    "3": "Orbital Shear",
+    "4": "Matter Dispersion",
+    "5": "Void Collapse",
+    "6": "Fragment Vector",
+    "7": "Spatial Distortion",
+    "8": "Surface Flux",
+    "9": "Entropic Drift"
+  },
+  "animation": {
+    "loop": "requestAnimationFrame",
+    "time_source": "THREE.Clock.getElapsedTime",
+    "deform_increment_per_frame": 0.0008,
+    "mesh_rotation_increment_per_frame": {
+      "x": 0.001,
+      "y": 0.002
+    },
+    "mesh_scale_expression": "1 + deform * 0.2",
+    "frame_rate_dependency": true
+  },
+  "background": {
+    "type": "animated CanvasRenderingContext2D pixel field",
+    "algorithm": "custom two-dimensional gradient-noise-like function labelled Perlin",
+    "time_source": "performance.now",
+    "resolution": "full window pixel dimensions",
+    "randomized_permutation_at_load": true
+  },
+  "interaction": {
+    "mouse_or_pointer_camera_rotation": true,
+    "touch_camera_rotation": true,
+    "wheel_or_gesture_zoom": true,
+    "camera_pan": false,
+    "keyboard_preview_reset": true,
+    "keyboard_preview_reset_key": "R",
+    "window_resize_handling": true,
+    "real_time_animation": true
+  },
+  "rendering_pipeline": [
+    "Initialize animated 2D canvas background.",
+    "Create Three.js scene, perspective camera, transparent WebGL renderer and OrbitControls.",
+    "Decode the embedded Base64 GLB into an ArrayBuffer.",
+    "Decode and load the standalone embedded Base64 PNG as a Three.js texture.",
+    "Compile the embedded GLSL vertex and fragment shaders into a ShaderMaterial.",
+    "Load token and conservation data from TzKT when token_id is present.",
+    "Apply on-chain mode and personality values to shader uniforms.",
+    "Parse the GLB, normalize and center its scene, replace its material with the custom ShaderMaterial.",
+    "Advance time, deformation, rotation and scale on every animation frame.",
+    "Render the scene continuously and update camera controls."
+  ],
+  "preservation_and_reconstruction": {
+    "mandatory_components": [
+      "the exact HTML artifact or an integrity-verified equivalent",
+      "embedded inline JavaScript",
+      "embedded vertex shader",
+      "embedded fragment shader",
+      "embedded Base64 GLB",
+      "embedded Base64 PNG",
+      "compatible Three.js runtime",
+      "compatible OrbitControls implementation",
+      "compatible GLTFLoader implementation",
+      "on-chain token parameters for canonical token rendering",
+      "interactive camera controls"
+    ],
+    "external_files_that_must_also_be_preserved": [
+      "js/three.min.js",
+      "js/OrbitControls.js",
+      "js/GLTFLoader.js"
+    ],
+    "technically_replaceable_subject_to_artist_intent": [
+      "browser",
+      "operating system",
+      "graphics driver",
+      "Three.js implementation or revision",
+      "WebGL implementation",
+      "TzKT access layer, provided authoritative on-chain values are preserved"
+    ],
+    "integrity_verification": {
+      "primary_renderer_sha256": "88e74b9884362da715af977f779d9e3e735524260901dabcd6fcc4a63b6cff0c",
+      "model_sha256_decoded": "0b1ab02ab7edcd38decf455ca37496442d841bfeb5dd86f9a741b83349148550",
+      "texture_sha256_decoded": "9c363fde4f8fe543d5fe3144c9af541f6b56e8a265744f021c4a273f3e198117",
+      "vertex_shader_sha256": "d6f3fba5ba964479cdea3890ef43e940220d71bb900830180074e427c41bd6a0",
+      "fragment_shader_sha256": "4c2d698eb65c76555915ba99e3e9d68c4b709b958df00254735e23e7b0d349b3",
+      "inline_javascript_sha256": "7c697a253e946bb4455ee33bf2446ecb904ed8f74c470273c2a1e99133993ca4"
+    }
+  },
+"provenance": {
+  "renderer_history_index": 0,
+  "canonical_status": "original_renderer",
+  "on_chain_registration_status": "registered",
+  "registration_method": "register_original_renderer",
+  "previous_renderer": null
+},
+  "technical_observations": [
+    "The HTML is not fully self-contained because the Three.js runtime and two helper scripts remain external.",
+    "The PNG texture exists twice: once inside the GLB and once as a standalone Base64 string; both decoded copies are byte-identical.",
+    "The on-chain seed is loaded but is not directly used by the supplied shader or parameter-generation logic.",
+    "Animation increments are frame-based, so speed may vary with display refresh rate and runtime performance.",
+    "The background permutation and preview personality values use Math.random and are not deterministic.",
+    "The contract address is still a placeholder in the supplied renderer."
+  ]
+}
